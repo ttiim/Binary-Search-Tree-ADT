@@ -1,7 +1,7 @@
 # Binary-Search-Tree-ADT
 this is being built through lab 8 and 9 exercises
 
-Exercise 1: Define a C struct to represent one Node in a linked implementation of a
+#Exercise 1: Define a C struct to represent one Node in a linked implementation of a
 Binary Tree.
 The fields are:
 • An int, representing the key item stored in the node.
