@@ -22,7 +22,7 @@ later.
 Exercise 3: Write some experimental code to work with the Node struct.
 • Write a simple main() program that creates 3 Nodes, linked together into a
 simple 2-level tree.
-o Start with a Node pointer variable, say called root.
+    o Start with a Node pointer variable, say called root.
 o Construct a new Node and point root at it (this is the root node).
 o Construct 2 additional Nodes and link them into the left- and right-subtree
 pointers of the root.
