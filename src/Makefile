@@ -1,4 +1,4 @@
 all: btmain
 
-btmain: lab8.c
-	gcc lab8.c -o btmain
+btmain: binarytree.h binarytree.c bst-test-basic.c
+	gcc binarytree.c bst-test-basic.c -o btmain

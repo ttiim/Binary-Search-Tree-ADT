@@ -1,3 +1,6 @@
+LAB 8
+
+
 # Binary-Search-Tree-ADT
 this is being built through lab 8 and 9 exercises
 
@@ -66,3 +69,72 @@ traversal, simply print the key values in traversal order:
 Tip: examine the expression tree diagram on page 1 – these traversals will create an infix,
 pre-fix, and post-fix expression, respectively, from this tree.
 Add some additional test cases to your main() program to test each traversal.
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+LAB 9
+
+A
+
+Exercise 1: add some abstractions for a Binary Tree data type:
+(Note: these are nearly pure abstraction – hide that a Tree is just a Node pointer)
+• Use a simple C typdef to define the BinaryTree data type, which is simply a
+pointer to the root Node of a tree.
+• Write a constructor to initialize and return an empty BinaryTree value.
+• Write function: IsEmpty(BinaryTree t) to return true iff the Tree is empty.
+
+Exercise 2: Re-write each of the basic Tree operations you developed in lab 8 so they
+take a BinaryTree argument instead of a Node pointer.
+• Size(BinaryTree t) : return the number of nodes in Tree t.
+• Height(BinaryTree t) : return the height of Tree t.
+• Print(BinaryTree t) : print an in-order text representation of Tree t.
+• Destroy(BinaryTree* t_ref) : empty and free all the memory allocated to Tree t.
+Be sure to pass a reference to a Tree for this function – it is a "mutator1".
+Replace the experimental code in your main() program to use and test each of
+your new Tree operations (try using assert to check each test result).
+
+
+
+B
+
+Exercise 3: Write an insert function that maintains search ordering.
+• Insert(KeyType K) : inserts a new leaf node with key K in Search Tree order.
+Notice that insertion involves a traversal! Tree traversals are naturally recursive,
+so use recursive thinking to solve this!
+Be sure to pass a reference to a Tree to this function – it is a "mutator1"!
+Revise your test driver to use this function to insert nodes into your tree and to create
+a deeper tree with a more complex shape.
+Notice that inserting keys in sequence creates a linear structure – try creating a more
+complex tree by inserting keys out of order.
+
+
+
+
+
+Exercise 4: Write the fundamental Search Tree search algorithm.
+• Find(KeyType K) : find a node with key K in a Search Tree, if no such node is
+found, return NULL.
+Ultimately, this will be an internal helper function since the Tree API will want to
+return a data item here, not a tree Node.
+Later, this function could serve as the basis for public API functions to determine if the
+key exists in the tree and to return other data associated with the key.
+For now, add some additional test cases to your main() program to test the Find()
+function directly.
+
+
+C
+
+Exercise 5: Store data records in the Binary Search Tree.
+• Entry : define a struct data type with a key (int) and a data value (C-string).
+• Tree Node : defines an Entry as the data type stored in each node.
+• Node constructor : takes a entry as input, stores a deep copy of the entry in the
+Node. Destructor must free the entry's dynamic data.
+• Tree API : keys are still integers, so functions that take keys as parameters will
+only need to change their internal algorithms to look for the entry.key
+field.
+• Search(KeyType K) : add a function to search a Tree based on the key, and
+return a pointer to the matching entry, if found. Return NULL if not
+found
+Revise the test cases to your main() program to test the tree operations using Entry
+structs instead of plain integers as the data for each tree node.

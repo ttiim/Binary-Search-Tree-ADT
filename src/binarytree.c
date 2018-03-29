@@ -11,50 +11,48 @@
 
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h>         
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
 #include <assert.h>
+#include "binarytree.h"
 
 
 
-/*******************
- * PRIVATE TYPE DECLARATION
- ********************/
 
-typedef int keytype_t; 
+//Help Operation prototypes
 
-struct BTNode{
-    keytype_t key;
-    struct BTNode *left;
-    struct BTNode *right;
-};
-
-typedef struct BTNode Btnode_t;
-
-typedef Btnode_t* BinaryTree_t;
-
-
-//----prototypes
-
-bool btIsEmpty(BinaryTree_t tree);
-int btHeight(BinaryTree_t tree);
-int btSize(BinaryTree_t tree);
-BinaryTree_t btPrint(BinaryTree_t tree);
+int btFind (BinaryTree_t tree, keytype_t val);
 
 // -------HELP OPERATIONS----------
+
 /*
-int MaxValue(int a, int b)  /
+*   Ultimately, this will be an internal helper function since the Tree API will want to
+*   return a data item here, not a tree Node.
+*/
+
+
+int btFind (BinaryTree_t tree, keytype_t val)
 {
-    int max = a;
-    if (max <b)
-    b=max;
+    if( btIsEmpty(tree) || (tree->key = val))
+    return NULL;
     
-    return max;
+    else if (val < tree->left->key)
+    return (btfind(tree->left, val));
+    
+    else if (val> tree->right -> key)
+    return btfind( tree->right-> key);
     
 }
 
+
+/*
+struct node *findSmallestElement(struct node *tree) 
+{ if( (tree == NULL) || (tree->left == NULL)) 
+return tree; 
+else 
+return findSmallestElement(tree ->left); }
 */
 
 
@@ -73,7 +71,7 @@ Btnode_t* btNodeCreate (keytype_t key)
 }
 
 
-BinaryTree_t btCreate()                       //constructor 
+BinaryTree_t btCreate()                        
 {
     BinaryTree_t tree = NULL;
     return tree;
@@ -129,14 +127,27 @@ int btHeight(BinaryTree_t tree)  // return the height of a sub-tree.
 }
    
    
+BinaryTree_t btInsert (BinaryTree_t* tree_ref, keytype_t key)
+{
+    BinaryTree_t tree = *tree_ref;
+    if (btIsEmpty(tree))
+    tree = btCreate(key);
+    
+    else if (key > tree->key)
+    btInsert(tree->right->node);
+    
+    else if ()key < tree->key)
+    btInsert(tree ->left -> key);
+}
+   
  /* 
- BinaryTree_t btPrint(BinaryTree_t tree)   //not working quite yet
+ BinaryTree_t btPrint(BinaryTree_t tree)   //not working quite yet     Joseph meant that this is quite tricky
  {
      
     if(btIsEmpty(tree))
       return 0;
     
-    btPrint(tree->left);      //use levels idea pass in a level and iterate through
+    btPrint(tree->left);                    //use levels idea pass in a level and iterate through
     btNodePrint( tree->key);
     btPrint(tree->right);
 
@@ -149,7 +160,7 @@ bool btIsEmpty(BinaryTree_t tree)
 }
    
     
-/* 
+/*
     
 void preOrder(BinaryTree_t tree)
 {
@@ -188,37 +199,13 @@ void postOrder(BinaryTree_t tree)
   printf("%d\t", tree->data);
   }
 }
-   
+/*   
     //btNodePrint( const Btnode_t node)
     
 
 
 
-*/
     
     
     
-    
-int main()
-{
-  BinaryTree_t tree = btCreate();  
- 
-  Btnode_t* node1 = btNodeCreate(1);    //create more 3 more trees
-  Btnode_t* node2 = btNodeCreate(2);
-  Btnode_t* node3 = btNodeCreate(3);
-  
-  tree= node1;
-  tree->left = node2;
-  tree->right =node3;
- 
-  btNodePrint(*node3);
-  printf("the size is [%d]\n",btSize(tree));
-  printf(" the height is [%d]\n", btHeight(tree));
-  
-    //btprint(tree);    
-    
-    btDelete(&tree);
-    
-   // btprint(tree);     
-        
-}
+
