@@ -51,10 +51,10 @@ BinaryTree_t tree = bstCreate();
    printf("\nTree:\n");
    inOrder(tree);
 
-   assert(btSize(tree) == 12);
+   assert(btSize(tree) == 11);
    assert(btHeight(tree) == 5);
 
-   //Btnode_t node = *bstFind(tree, 4);
+  // Btnode_t* node = bstFind(tree, 4);
 
    //printf("entry:\n key: %d data: %s", node.entry.key, node.entry.data);
 

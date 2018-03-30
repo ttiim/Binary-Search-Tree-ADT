@@ -1,9 +1,9 @@
 /*Capilano University
 *   Comp 220- Professor Jospeph Fall
 *   Authour: Tim Wriglesworth
-*   Worked in collaboration with  Karan Nedungadi
-*   Date:22.03.18
-    Lab 8  
+*   Worked in collaboration with  Karan Nedungadi and Andre Wakkary
+*   Date:29.03.18
+    Lab 8 and 9 combined  
 *  
   */
  //https://stackoverflow.com/questions/3437404/min-and-max-in-c?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
@@ -23,7 +23,8 @@
 
 //Help Operation prototypes
 
-Btnode_t* btFind (BinaryTree_t tree, keytype_t val);
+Btnode_t* bstFind (BinaryTree_t tree, keytype_t val);
+entry_t entryCreate();
 
 // -------HELP OPERATIONS----------
 
@@ -38,7 +39,7 @@ Btnode_t* btFind (BinaryTree_t tree, keytype_t val);
 */
 
 
-Btnode_t* btFind (BinaryTree_t tree, keytype_t val)
+Btnode_t* bstFind (BinaryTree_t tree, keytype_t val)
 {
     if( btIsEmpty(tree))
     return NULL;
@@ -51,12 +52,12 @@ Btnode_t* btFind (BinaryTree_t tree, keytype_t val)
     
     else if (val < tree->entry.key)
     {
-        return (btFind(tree->left, val));
+        return (bstFind(tree->left, val));
     }
     
     else if (val > tree->entry.key)
     {
-        return (btFind( tree->right, val));
+        return (bstFind( tree->right, val));
         
     }
     
@@ -74,16 +75,11 @@ return findSmallestElement(tree ->left); }
 
 //--------TREE OPERATIONS------------
 
-/*
-entry_t entryCreate()
-{
-    entry_t entry = malloc(sizeof(entry_t));
-    
-}
-*/
+
 
 Btnode_t* btNodeCreate (entry_t entry)
 {
+    //entry = entryCreate();
     Btnode_t* node= malloc(sizeof(Btnode_t));
     node->entry = entry;
     node->left= NULL;
@@ -162,7 +158,7 @@ BinaryTree_t bstInsert (BinaryTree_t* tree_ref, entry_t entry)
     BinaryTree_t tree = *tree_ref;
     if (btIsEmpty(tree))
     {
-    tree = bstCreate(entry);
+    *tree_ref = btNodeCreate(entry); //node create
     }
     
     else if (entry.key > tree->entry.key)
@@ -181,7 +177,7 @@ BinaryTree_t bstInsert (BinaryTree_t* tree_ref, entry_t entry)
 
 entry_t* search (BinaryTree_t tree, keytype_t k)
 {
-    Btnode_t* ptr = btFind(tree,k);
+    Btnode_t* ptr = bstFind(tree,k);
     return & ptr->entry;
 }
 
