@@ -23,26 +23,42 @@
 
 //Help Operation prototypes
 
-int btFind (BinaryTree_t tree, keytype_t val);
+Btnode_t* btFind (BinaryTree_t tree, keytype_t val);
 
 // -------HELP OPERATIONS----------
 
 /*
 *   Ultimately, this will be an internal helper function since the Tree API will want to
 *   return a data item here, not a tree Node.
+*   
+*    add a function to search a Tree based on the key, and
+*   return a pointer to the matching entry, if found. Return NULL if not
+*   found 
+*
 */
 
 
-int btFind (BinaryTree_t tree, keytype_t val)
+Btnode_t* btFind (BinaryTree_t tree, keytype_t val)
 {
-    if( btIsEmpty(tree) || (tree->key = val))
+    if( btIsEmpty(tree))
     return NULL;
     
-    else if (val < tree->left->key)
-    return (btfind(tree->left, val));
+    else if (tree->entry.key == val)   
+    {
+        return tree;
+        
+    }
     
-    else if (val> tree->right -> key)
-    return btfind( tree->right-> key);
+    else if (val < tree->entry.key)
+    {
+        return (btFind(tree->left, val));
+    }
+    
+    else if (val > tree->entry.key)
+    {
+        return (btFind( tree->right, val));
+        
+    }
     
 }
 
@@ -58,34 +74,42 @@ return findSmallestElement(tree ->left); }
 
 //--------TREE OPERATIONS------------
 
+/*
+entry_t entryCreate()
+{
+    entry_t entry = malloc(sizeof(entry_t));
+    
+}
+*/
 
-Btnode_t* btNodeCreate (keytype_t key)
+Btnode_t* btNodeCreate (entry_t entry)
 {
     Btnode_t* node= malloc(sizeof(Btnode_t));
-    node->key = key;
+    node->entry = entry;
     node->left= NULL;
     node->right=NULL;
-    
+    //malloc the entry then destroy in destroy
     return node;
     
 }
 
 
-BinaryTree_t btCreate()                        
+
+BinaryTree_t bstCreate()                        
 {
     BinaryTree_t tree = NULL;
     return tree;
 }
 
-BinaryTree_t btDelete(BinaryTree_t* tree_ref)      // Destroy(Node** sub-tree-ref): free() all Nodes in a sub-tree.  
+BinaryTree_t bstDelete(BinaryTree_t* tree_ref)      // Destroy(Node** sub-tree-ref): free() all Nodes in a sub-tree.  
                                                // Add some additional test cases to your main() program to test each of these function as you write them.
 {
     BinaryTree_t tree = *tree_ref;
     
     if (tree != NULL)
     {
-        btDelete(&tree->left);
-        btDelete(&tree->right);
+        bstDelete(&tree->left);
+        bstDelete(&tree->right);
         free(tree);
         }
         *tree_ref = NULL;
@@ -100,10 +124,16 @@ later.
 
  BinaryTree_t btNodePrint( const Btnode_t node)
 {
-    printf("(%d) \n",node.key);
     
+    printf("The Binary Tree is: \n (%d) \n",node.entry.key);
 }
-    
+
+
+
+/*
+* print the number of nodes
+*/
+
     
  int btSize(BinaryTree_t tree)      // return the total number of nodes in a sub-tree. 
  {
@@ -127,20 +157,73 @@ int btHeight(BinaryTree_t tree)  // return the height of a sub-tree.
 }
    
    
-BinaryTree_t btInsert (BinaryTree_t* tree_ref, keytype_t key)
+BinaryTree_t bstInsert (BinaryTree_t* tree_ref, entry_t entry)
 {
     BinaryTree_t tree = *tree_ref;
     if (btIsEmpty(tree))
-    tree = btCreate(key);
+    {
+    tree = bstCreate(entry);
+    }
     
-    else if (key > tree->key)
-    btInsert(tree->right->node);
+    else if (entry.key > tree->entry.key)
+    {
+    bstInsert(&tree->right, entry);
+    }
     
-    else if ()key < tree->key)
-    btInsert(tree ->left -> key);
+    else if (entry.key < tree->entry.key)
+    bstInsert( &tree ->left, entry);
+}
+  
+  
+/* Search(KeyType K) : add a function to search a Tree based on the key, and
+*  return a pointer to the matching entry, if found. Return NULL if not found
+*/  
+
+entry_t* search (BinaryTree_t tree, keytype_t k)
+{
+    Btnode_t* ptr = btFind(tree,k);
+    return & ptr->entry;
+}
+
+
+
+bool btIsEmpty(BinaryTree_t tree)
+{
+     return(tree==NULL);
 }
    
- /* 
+    
+
+void inOrder (BinaryTree_t tree)
+{
+    if (tree != NULL)
+    {
+    
+    inOrder(tree->left);
+   printf("tree->key %d\n", tree->entry.key);
+   // btNodePrint(*tree);
+    inOrder(tree->right);
+    }
+    
+}
+
+
+/*
+*  print the nodes out
+*/
+/*
+BinaryTree_t btPrint (const Btnode_t node)
+{
+    
+    
+    
+    
+}
+*/    
+
+
+
+/*
  BinaryTree_t btPrint(BinaryTree_t tree)   //not working quite yet     Joseph meant that this is quite tricky
  {
      
@@ -148,19 +231,13 @@ BinaryTree_t btInsert (BinaryTree_t* tree_ref, keytype_t key)
       return 0;
     
     btPrint(tree->left);                    //use levels idea pass in a level and iterate through
-    btNodePrint( tree->key);
+    btNodePrint( *tree);
     btPrint(tree->right);
 
 }                 
-   
-*/
-bool btIsEmpty(BinaryTree_t tree)
-{
-     return(tree==NULL);
-}
-   
-    
-/*
+
+
+
     
 void preOrder(BinaryTree_t tree)
 {
@@ -175,35 +252,7 @@ void preOrder(BinaryTree_t tree)
     
 }
 
-
-void inOrder (BinaryTree_t tree)
-{
-    if (tree != NULL)
-    {
-    
-    inOrderl(tree->left);
-    printf("%d\t", tree->data); 
-    inOrder(tree->right);
-    }
-    
-}
-
-
-
-void postOrder(BinaryTree_t tree)
-{
-  if (tree != NULL)
-  {
-  postOrder(tree->left);
-  postOrder(tree->right); 
-  printf("%d\t", tree->data);
-  }
-}
-/*   
-    //btNodePrint( const Btnode_t node)
-    
-
-
+*/
 
     
     

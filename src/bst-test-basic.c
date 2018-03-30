@@ -1,60 +1,69 @@
 //----- SAMPLE TEST DRIVER CODE -----
 #include <assert.h>
 #include "binarytree.h"
-/*
-int main( )
-{
-KeyType k;
-BinarySearchTree_t tree = btCreate();
-assert(btIsEmpty(tree));
-assert(btHeight(tree) == 0);
-bstInsert(&tree, 10);
-bstInsert(&tree, 13);
-bstInsert(&tree, 7);
-printf("\nTree:\n");
-btPrint(tree);
-assert(!btIsEmpty(tree));
-assert(btSize(tree) == 3);
-assert(btHeight(tree) == 2);
-bstInsert(&tree, 9);
-bstInsert(&tree, 5);
-bstInsert(&tree, 3);
-bstInsert(&tree, 11);
-bstInsert(&tree, 14);
-bstInsert(&tree, 12);
-bstInsert(&tree, 8);
-bstInsert(&tree, 4);
-bstInsert(&tree, 2);
-printf("\nTree:\n");
-btPrint(tree);
-assert(btSize(tree) == 12);
-assert(btHeight(tree) == 5);
-btDestroy(&tree);
-}
-
-*/
-
 
 int main()
 {
-  BinaryTree_t tree = btCreate();  
- 
-  Btnode_t* node1 = btNodeCreate(1);    //create more 3 more trees
-  Btnode_t* node2 = btNodeCreate(2);
-  Btnode_t* node3 = btNodeCreate(3);
-  
-  tree= node1;
-  tree->left = node2;
-  tree->right =node3;
- 
-  btNodePrint(*node3);
-  printf("the size is [%d]\n",btSize(tree));
-  printf(" the height is [%d]\n", btHeight(tree));
-  
-    //btprint(tree);    
-    
-    btDelete(&tree);
-    
-   // btprint(tree);     
-        
+
+BinaryTree_t tree = bstCreate();
+	assert(btIsEmpty(tree));
+	assert(btHeight(tree) == 0);
+	
+	entry_t ten = {10, "ten"};
+	bstInsert(&tree, ten);
+	entry_t thirteen = {13, "thirteen"};
+	bstInsert(&tree, thirteen);
+	entry_t seven = {7, "seven"};
+   bstInsert(&tree, seven);
+   
+   printf("\nTree:\n");
+   inOrder(tree);
+   assert(!btIsEmpty(tree));
+   assert(btSize(tree) == 3);
+   assert(btHeight(tree) == 2);
+
+   entry_t nine = {9, "nine"};
+   bstInsert(&tree, nine);
+
+   entry_t five = {5, "five"};
+   bstInsert(&tree, five);
+
+   entry_t three = {3, "three"};
+   bstInsert(&tree, three);
+
+   entry_t eleven = {11, "eleven"};
+   bstInsert(&tree, eleven);
+
+   entry_t fourteen = {14, "fourteen"};
+   bstInsert(&tree, fourteen);
+
+   entry_t twelve = {12, "twelve"};
+   bstInsert(&tree, twelve);
+
+   entry_t eight = {8, "eight"};
+   bstInsert(&tree, eight);
+   
+   
+   
+    entry_t two = {2, "two"};
+   bstInsert(&tree, two);
+
+   printf("\nTree:\n");
+   inOrder(tree);
+
+   assert(btSize(tree) == 12);
+   assert(btHeight(tree) == 5);
+
+   //Btnode_t node = *bstFind(tree, 4);
+
+   //printf("entry:\n key: %d data: %s", node.entry.key, node.entry.data);
+
+   bstDelete(&tree);
+
+   assert(btIsEmpty(tree));
+
+   printf("\n\n----- testing complete -----\n\n");
 }
+
+
+
